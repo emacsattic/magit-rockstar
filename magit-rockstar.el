@@ -44,7 +44,7 @@
 ;; notice or way to appeal.  This is a staging ground.  It's okay
 ;; if things ain't perfect, or if they only do what *I currently*
 ;; need but not what you (or I) think they should (eventually) be
-;; doing indead.
+;; doing instead.
 
 ;; Currently my init file also contains this:
 
