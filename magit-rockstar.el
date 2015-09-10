@@ -47,9 +47,9 @@
 ;; doing instead.
 
 ;; Currently my init file also contains this:
-
-(magit-define-popup-action 'magit-fetch-popup
-  ?p "Pull request" 'magit-branch-pull-request)
+;;
+;; (magit-define-popup-action 'magit-fetch-popup
+;;   ?p "Pull request" 'magit-branch-pull-request)
 
 ;;; Code:
 
