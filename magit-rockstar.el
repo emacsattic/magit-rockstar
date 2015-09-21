@@ -140,7 +140,7 @@ prefix argument checkout branch instead of showing its log."
   (magit-branch-set-upstream branch "master")
   (if checkout
       (magit-run-git "checkout" branch)
-    (magit-log (list branch))))
+    (apply #'magit-log (list branch) (magit-log-arguments))))
 
 ;;; magit-rockstar.el ends soon
 (provide 'magit-rockstar)
