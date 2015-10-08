@@ -36,7 +36,7 @@
 ;;    (magit-define-popup-action 'magit-rebase-popup
 ;;      ?R "Rockstar" 'magit-rockstar)
 ;;    (magit-define-popup-action 'magit-commit-popup
-;;      ?R "Reshelve" 'magit-reshelve)
+;;      ?n "Reshelve" 'magit-reshelve)
 
 ;; Also included are tools that are either only useful for people
 ;; working on Magit itself and/or that aren't ready to be added to
@@ -48,8 +48,10 @@
 
 ;; Currently my init file also contains this:
 ;;
-;; (magit-define-popup-action 'magit-fetch-popup
-;;   ?p "Pull request" 'magit-branch-pull-request)
+;;    (magit-define-popup-action 'magit-branch-popup
+;;      ?R "Toggle rebasing" 'magit-branch-toggle-rebase)
+;;    (magit-define-popup-action 'magit-fetch-popup
+;;      ?p "Pull request" 'magit-branch-pull-request)
 
 ;;; Code:
 
@@ -141,6 +143,17 @@ prefix argument checkout branch instead of showing its log."
   (if checkout
       (magit-run-git "checkout" branch)
     (apply #'magit-log (list branch) (magit-log-arguments))))
+
+(defun magit-branch-toggle-rebase (branch)
+  "Toggle value of `branch.<branch>.rebase' for the current branch."
+  (interactive (--if-let (magit-get-current-branch)
+                   (list it)
+                 (user-error "HEAD is detached")))
+  (let ((var (format "branch.%s.rebase" branch)))
+    (if (magit-get-boolean var)
+        (magit-run-git "config" "--unset" var)
+      (magit-set "true" var)))
+  (magit-refresh))
 
 ;;; magit-rockstar.el ends soon
 (provide 'magit-rockstar)
