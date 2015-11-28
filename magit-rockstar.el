@@ -137,7 +137,7 @@ prefix argument checkout branch instead of showing its log."
   (unless branch
     (setq branch (format "pr-%s" number)))
   (magit-call-git "fetch" "origin" (format "pull/%s/head:%s" number branch))
-  (magit-branch-set-upstream branch "master")
+  (magit-set-branch*merge/remote branch "master")
   (if checkout
       (magit-run-git "checkout" branch)
     (apply #'magit-log (list branch) (magit-log-arguments))))
