@@ -61,7 +61,7 @@
 Want to hammer out commits at one commit per minute?
 With this function you can!"
   (interactive (list (magit-read-other-branch "Rocking since" nil
-                                              (magit-get-tracked-branch))
+                                              (magit-get-upstream-branch))
                      (read-number "Offset: " 0)))
   (let* ((branch (magit-get-current-branch))
          (range (concat from ".." branch))
