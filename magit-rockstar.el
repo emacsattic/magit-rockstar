@@ -35,6 +35,7 @@
 ;;
 ;;    (magit-define-popup-action 'magit-rebase-popup
 ;;      ?R "Rockstar" 'magit-rockstar)
+;;
 ;;    (magit-define-popup-action 'magit-commit-popup
 ;;      ?n "Reshelve" 'magit-reshelve)
 
@@ -49,7 +50,14 @@
 ;; Currently my init file also contains this:
 ;;
 ;;    (magit-define-popup-action 'magit-fetch-popup
-;;      ?p "Pull request" 'magit-branch-pull-request)
+;;      ?P "Pull request" 'magit-branch-pull-request)
+;;
+;; To use the "anti-stage" feature add this:
+;;
+;;    (setq magit-unstage-use-anti-stage t)
+;;
+;;    (magit-define-popup-action 'magit-revert-popup
+;;      ?e "Revert & edit HEAD" 'magit-uncommit-extend)
 
 ;;; Code:
 
@@ -141,6 +149,23 @@ prefix argument checkout branch instead of showing its log."
   (if checkout
       (magit-run-git "checkout" branch)
     (apply #'magit-log (list branch) (magit-log-arguments))))
+
+(defvar magit-unstage-use-anti-stage nil
+  "Whether `magit-unstage' uses `magit-anti-stage'.
+If non-nil, then `magit-unstage' uses `magit-anti-stage' when
+invoked on a committed change.  Otherwise it raises an error.")
+
+(defun magit-anti-stage (&rest args)
+  "Reverse the change at point in the index."
+  (interactive)
+  (magit-reverse (cons "--cached" args)))
+
+(defun magit-uncommit-extend (&rest args)
+  "Reverse the change at point in `HEAD'."
+  (interactive)
+  (let ((inhibit-magit-refresh t))
+    (magit-anti-stage args))
+  (magit-commit-extend))
 
 ;;; magit-rockstar.el ends soon
 (provide 'magit-rockstar)
