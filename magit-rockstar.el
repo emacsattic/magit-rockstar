@@ -152,11 +152,6 @@ prefix argument checkout branch instead of showing its log."
       (magit-run-git "checkout" branch)
     (apply #'magit-log (list branch) (magit-log-arguments))))
 
-(defvar magit-unstage-use-anti-stage nil
-  "Whether `magit-unstage' uses `magit-anti-stage'.
-If non-nil, then `magit-unstage' uses `magit-anti-stage' when
-invoked on a committed change.  Otherwise it raises an error.")
-
 ;;;###autoload
 (defun magit-uncommit-extend (&rest args)
   "Reverse the change at point in `HEAD'."
