@@ -62,6 +62,7 @@
 (require 'dash)
 (require 'magit)
 
+;;;###autoload
 (defun magit-rockstar (from &optional offset)
   "Attempt to make you look like a rockstar programmer.
 Want to hammer out commits at one commit per minute?
@@ -87,6 +88,7 @@ export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
     (magit-run-git "update-ref" "-d"
                    (concat "refs/original/refs/heads/" branch))))
 
+;;;###autoload
 (defun magit-reshelve (date)
   "Change the author and committer dates of `HEAD' to DATE." 
   (interactive (list (read-string "Date or offset: "
@@ -98,6 +100,7 @@ export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
     (setenv "GIT_COMMITTER_DATE" date)
     (magit-run-git "commit" "--amend" "--no-edit" (concat "--date=" date))))
 
+;;;###autoload
 (defun magit-debug-sections ()
   "Print information about the current Magit buffer's sections."
   (interactive)
@@ -125,6 +128,7 @@ export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
   (--each (magit-section-children section)
     (magit-debug-sections-1 it (1+ level))))
 
+;;;###autoload
 (defun magit-branch-pull-request (number &optional branch checkout)
   "Create a new branch from a Github pull request and show its log.
 
@@ -153,6 +157,7 @@ prefix argument checkout branch instead of showing its log."
 If non-nil, then `magit-unstage' uses `magit-anti-stage' when
 invoked on a committed change.  Otherwise it raises an error.")
 
+;;;###autoload
 (defun magit-uncommit-extend (&rest args)
   "Reverse the change at point in `HEAD'."
   (interactive)
