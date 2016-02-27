@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015-2016  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Package-Requires: ((dash "2.12.1") (magit "2.4.0"))
+;; Package-Requires: ((dash "2.12.1") (magit "2.5.0"))
 ;; Homepage: http://github.com/tarsius/magit-rockstar
 ;; Keywords: convenience
 
@@ -52,9 +52,7 @@
 ;;    (magit-define-popup-action 'magit-fetch-popup
 ;;      ?P "Pull request" 'magit-branch-pull-request)
 ;;
-;; To use the "anti-stage" feature add this:
-;;
-;;    (setq magit-unstage-use-anti-stage t)
+;; To use the "uncommit-extend" feature add this:
 ;;
 ;;    (magit-define-popup-action 'magit-revert-popup
 ;;      ?e "Revert & edit HEAD" 'magit-uncommit-extend)
@@ -155,16 +153,11 @@ prefix argument checkout branch instead of showing its log."
 If non-nil, then `magit-unstage' uses `magit-anti-stage' when
 invoked on a committed change.  Otherwise it raises an error.")
 
-(defun magit-anti-stage (&rest args)
-  "Reverse the change at point in the index."
-  (interactive)
-  (magit-reverse (cons "--cached" args)))
-
 (defun magit-uncommit-extend (&rest args)
   "Reverse the change at point in `HEAD'."
   (interactive)
   (let ((inhibit-magit-refresh t))
-    (magit-anti-stage args))
+    (magit-reverse-in-index args))
   (magit-commit-extend))
 
 ;;; magit-rockstar.el ends soon
