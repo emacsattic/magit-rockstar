@@ -1,4 +1,4 @@
-;;; magit-rockstar.el --- commit like a rockstar
+;;; magit-rockstar.el --- commit like a rockstar  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2015-2016  Jonas Bernoulli
 
