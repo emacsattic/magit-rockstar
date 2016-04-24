@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015-2016  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Package-Requires: ((dash "2.12.1") (magit "2.5.0"))
+;; Package-Requires: ((dash "2.12.1") (magit "2.6.1"))
 ;; Homepage: http://github.com/tarsius/magit-rockstar
 ;; Keywords: convenience
 
