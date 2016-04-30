@@ -78,15 +78,16 @@ With this function you can!"
 export GIT_AUTHOR_DATE=\"%%s %s\"; \
 export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
     (setq time (- time (% time 60)))
-    (magit-call-git "filter-branch" "-f" "--env-filter"
-                    (format "case $GIT_COMMIT in %s\nesac"
-                            (mapconcat
-                             (lambda (commit)
-                               (format format commit (cl-decf time 60) time))
-                             (magit-git-lines "rev-list" range) " "))
-                    range "--")
-    (magit-run-git "update-ref" "-d"
-                   (concat "refs/original/refs/heads/" branch))))
+    (magit-with-toplevel
+      (magit-call-git "filter-branch" "-f" "--env-filter"
+                      (format "case $GIT_COMMIT in %s\nesac"
+                              (mapconcat
+                               (lambda (commit)
+                                 (format format commit (cl-decf time 60) time))
+                               (magit-git-lines "rev-list" range) " "))
+                      range "--")
+      (magit-run-git "update-ref" "-d"
+                     (concat "refs/original/refs/heads/" branch)))))
 
 ;;;###autoload
 (defun magit-reshelve (date)
