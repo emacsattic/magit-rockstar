@@ -98,7 +98,7 @@ export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
     (when (string-match "^[0-9]+$" date)
       (setq date (format "%s%s" (- (truncate (float-time)) (* date 60))
                          (car (process-lines "date" "+%z")))))
-    (push (cons "GIT_COMMITTER_DATE" date) process-environment)
+    (push (concat "GIT_COMMITTER_DATE=" date) process-environment)
     (magit-run-git "commit" "--amend" "--no-edit" (concat "--date=" date))))
 
 ;;;###autoload
