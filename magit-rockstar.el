@@ -4,7 +4,7 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Package-Requires: ((dash "2.12.1") (magit "2.6.1"))
-;; Homepage: http://github.com/tarsius/magit-rockstar
+;; Homepage: https://github.com/tarsius/magit-rockstar
 ;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
