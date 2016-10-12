@@ -139,7 +139,11 @@ provided use \"pr-NR\".  Set \"master\" as the upstream.
 Assume all pull requests can be found on \"origin\".  With a
 prefix argument checkout branch instead of showing its log."
   (interactive
-   (let ((input (magit-read-string "Branch pull request (NR[:BRANCH-NAME])")))
+   (let ((input (magit-read-string
+                 "Branch pull request (NR[:BRANCH-NAME])"
+                 (magit-section-when 'magithub-issue
+                   (number-to-string
+                    (plist-get (magit-section-value it) :number))))))
      (if (string-match "\\([1-9][0-9]*\\)\\(?::\\(.+\\)\\)?" input)
          (list (match-string 1 input)
                (match-string 2 input)
