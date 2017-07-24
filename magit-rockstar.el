@@ -47,11 +47,6 @@
 ;; need but not what you (or I) think they should (eventually) be
 ;; doing instead.
 
-;; Currently my init file also contains this:
-;;
-;;    (magit-define-popup-action 'magit-fetch-popup
-;;      ?P "Pull request" 'magit-branch-pull-request)
-;;
 ;; To use the "uncommit-extend" feature add this:
 ;;
 ;;    (magit-define-popup-action 'magit-revert-popup
@@ -129,34 +124,6 @@ export GIT_COMMITTER_DATE=\"%%s %s\";;" tz tz)))
            (ignore-errors (marker-insertion-type (magit-section-content section))))
   (--each (magit-section-children section)
     (magit-debug-sections-1 it (1+ level))))
-
-;;;###autoload
-(defun magit-branch-pull-request (number &optional branch checkout)
-  "Create a new branch from a Github pull request and show its log.
-
-Read \"NR[:BRANCH-NAME] from the user.  If BRANCH-NAME is not
-provided use \"pr-NR\".  Set \"master\" as the upstream.
-
-Assume all pull requests can be found on \"origin\".  With a
-prefix argument checkout branch instead of showing its log."
-  (interactive
-   (let ((input (magit-read-string
-                 "Branch pull request (NR[:BRANCH-NAME])"
-                 (magit-section-when 'magithub-issue
-                   (number-to-string
-                    (plist-get (magit-section-value it) :number))))))
-     (if (string-match "\\([1-9][0-9]*\\)\\(?::\\(.+\\)\\)?" input)
-         (list (match-string 1 input)
-               (match-string 2 input)
-               current-prefix-arg)
-       (user-error "Invalid input"))))
-  (unless branch
-    (setq branch (format "pr-%s" number)))
-  (magit-call-git "fetch" "origin" (format "pull/%s/head:%s" number branch))
-  (magit-set-branch*merge/remote branch "master")
-  (if checkout
-      (magit-run-git "checkout" branch)
-    (apply #'magit-log (list branch) (magit-log-arguments))))
 
 ;;;###autoload
 (defun magit-uncommit-extend (&rest args)
